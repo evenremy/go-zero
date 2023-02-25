@@ -28,3 +28,23 @@ func TestConvertDataType(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "sql.NullTime", v)
 }
+
+func TestConvertStringDataType_uuid(t *testing.T) {
+	dbType := "uuid"
+	expectedType := "uuid.UUID"
+
+	gt, pqArray, err := ConvertStringDataType(dbType, true, true, false)
+	assert.Nil(t, err)
+	assert.Equal(t,  expectedType, gt)
+	assert.False(t, pqArray)
+
+	gt, pqArray, err = ConvertStringDataType(dbType, false, false, true)
+	assert.Nil(t, err)
+	assert.Equal(t,  expectedType, gt)
+	assert.False(t, pqArray)
+
+	gt, pqArray, err = ConvertStringDataType(dbType, true, false, false)
+	assert.Nil(t, err)
+	assert.Equal(t,  expectedType, gt)
+	assert.False(t, pqArray)
+}
